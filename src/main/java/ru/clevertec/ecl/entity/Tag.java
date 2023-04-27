@@ -33,5 +33,5 @@ public class Tag {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
-    private Set<GiftCertificate> giftCertificates = new HashSet<>();
+    private Set<GiftCertificate> certificates = new HashSet<>();
 }

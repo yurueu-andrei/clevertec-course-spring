@@ -165,6 +165,6 @@ public class CertificateRepository {
      * @param giftCertificate id of the entity to be deleted
      */
     private void deleteTagCertificateLinks(GiftCertificate giftCertificate) {
-        giftCertificate.getTags().forEach(tag -> tag.getGiftCertificates().remove(giftCertificate));
+        giftCertificate.getTags().forEach(tag -> tag.getCertificates().remove(giftCertificate));
     }
 }

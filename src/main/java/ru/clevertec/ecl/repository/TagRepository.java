@@ -130,6 +130,6 @@ public class TagRepository {
      * @param tag id of the entity to be deleted
      */
     private void deleteCertificateTagLinks(Tag tag) {
-        tag.getGiftCertificates().forEach(certificate -> certificate.getTags().remove(tag));
+        tag.getCertificates().forEach(certificate -> certificate.getTags().remove(tag));
     }
 }
