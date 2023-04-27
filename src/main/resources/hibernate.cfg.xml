@@ -10,7 +10,7 @@
         <property name="connection.password">postgres </property>
         <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 
-        <mapping class="ru.clevertec.ecl.entity.Certificate"/>
+        <mapping class="ru.clevertec.ecl.entity.GiftCertificate"/>
         <mapping class="ru.clevertec.ecl.entity.Tag"/>
     </session-factory>
 </hibernate-configuration>
