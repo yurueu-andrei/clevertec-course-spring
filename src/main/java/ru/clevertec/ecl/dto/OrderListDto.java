@@ -5,16 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CertificateUpdateDto {
+public class OrderListDto {
     private Long id;
-    private String name;
-    private String description;
-    private BigDecimal price;
-    private Integer duration;
-    private List<TagDto> tags;
+    private LocalDateTime createDate;
+    private BigDecimal cost;
+    private CertificateDto certificate;
 }
