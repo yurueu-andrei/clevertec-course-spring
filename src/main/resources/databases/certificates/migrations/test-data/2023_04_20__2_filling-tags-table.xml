@@ -2,7 +2,7 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-    <changeSet id="7" author="andrei.yurueu1@gmail.com" context="test_data">
+    <changeSet id="1" author="andrei.yurueu1@gmail.com" context="test_data">
         <comment>Fill the table "tags" with test data</comment>
         <sql>
             INSERT INTO tags(name)
