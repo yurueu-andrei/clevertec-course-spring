@@ -45,17 +45,17 @@ public class TagController {
     /**
      * Endpoint, which finds all Tags and return it as TagDtos
      *
-     * @param limit  used for pagination, defines the number of tags on the page
-     * @param offset used for pagination, defines the number of tags to be skipped (from the beginning)
+     * @param pageNumber used for pagination, defines the number of the page
+     * @param pageSize   used for pagination, defines the number of tags on the page
      * @return returns <b>TagDtos</b> made out of found Tags
      * @see TagDto
      */
     @GetMapping
     public List<TagDto> findAll(
-            @RequestParam int limit,
-            @RequestParam int offset
+            @RequestParam int pageSize,
+            @RequestParam int pageNumber
     ) throws ServiceException {
-        return tagService.findAll(limit, offset);
+        return tagService.findAll(pageNumber, pageSize);
     }
 
     /**
@@ -99,5 +99,16 @@ public class TagController {
             @PathVariable Long id
     ) throws ServiceException {
         return tagService.delete(id);
+    }
+
+    /**
+     * Endpoint, which finds the most used Tag of user with the highest cost of all orders and return it as TagDto
+     *
+     * @return returns <b>TagDto</b> made out of found Tag
+     * @see TagDto
+     */
+    @GetMapping("/mostUsed")
+    public TagDto findTheMostUsedTag() throws ServiceException {
+        return tagService.findTheMostUsedTag();
     }
 }
