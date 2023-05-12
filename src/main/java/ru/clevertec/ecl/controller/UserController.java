@@ -1,6 +1,8 @@
 package ru.clevertec.ecl.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +33,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value = "/users")
 public class UserController {
+
     private final UserService userService;
     private final OrderService orderService;
 
@@ -42,10 +45,10 @@ public class UserController {
      * @see UserDto
      */
     @GetMapping("/{id}")
-    public UserDto findById(
+    public ResponseEntity<UserDto> findById(
             @PathVariable Long id
     ) throws ServiceException {
-        return userService.findById(id);
+        return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
     }
 
     /**
@@ -57,11 +60,11 @@ public class UserController {
      * @see UserListDto
      */
     @GetMapping
-    public List<UserListDto> findAll(
+    public ResponseEntity<List<UserListDto>> findAll(
             @RequestParam int pageSize,
             @RequestParam int pageNumber
     ) throws ServiceException {
-        return userService.findAll(pageNumber, pageSize);
+        return new ResponseEntity<>(userService.findAll(pageNumber, pageSize), HttpStatus.OK);
     }
 
     /**
@@ -72,10 +75,10 @@ public class UserController {
      * @see UserSaveDto
      */
     @PostMapping
-    public UserDto add(
+    public ResponseEntity<UserDto> add(
             @RequestBody UserSaveDto userSaveDto
     ) throws ServiceException {
-        return userService.add(userSaveDto);
+        return new ResponseEntity<>(userService.add(userSaveDto), HttpStatus.OK);
     }
 
     /**
@@ -108,20 +111,20 @@ public class UserController {
     }
 
     @GetMapping("/{id}/orders")
-    public List<OrderDto> findUserOrders(
+    public ResponseEntity<List<OrderDto>> findUserOrders(
             @PathVariable Long id,
             @RequestParam int pageSize,
             @RequestParam int pageNumber
     ) throws ServiceException {
-        return orderService.findAllByUserId(id, pageNumber, pageSize);
+        return new ResponseEntity<>(orderService.findAllByUserId(id, pageNumber, pageSize), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/orders/{orderId}")
-    public OrderListDto findUserOrder(
+    public ResponseEntity<OrderListDto> findUserOrder(
             @PathVariable Long id,
             @PathVariable Long orderId
     ) throws ServiceException {
-        return orderService.findByIdAndUserId(id, orderId);
+        return new ResponseEntity<>(orderService.findByIdAndUserId(id, orderId), HttpStatus.OK);
     }
 
     @PostMapping("/{id}/orders")

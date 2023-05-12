@@ -17,6 +17,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ProjectExceptionHandler {
+
     private int exceptionId = 330;
 
     @ExceptionHandler(ServiceException.class)
@@ -38,6 +39,7 @@ public class ProjectExceptionHandler {
     @NoArgsConstructor
     @AllArgsConstructor
     private static class ApiCallDetailedError {
+
         private String status;
         private List<Map<String, String>> details;
     }

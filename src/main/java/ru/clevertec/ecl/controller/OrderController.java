@@ -1,6 +1,8 @@
 package ru.clevertec.ecl.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value = "/orders")
 public class OrderController {
+
     private final OrderService orderService;
 
     /**
@@ -26,10 +29,10 @@ public class OrderController {
      * @see OrderDto
      */
     @GetMapping("/{id}")
-    public OrderDto findById(
+    public ResponseEntity<OrderDto> findById(
             @PathVariable Long id
     ) throws ServiceException {
-        return orderService.findById(id);
+        return new ResponseEntity<>(orderService.findById(id), HttpStatus.OK);
     }
 
     /**
@@ -41,10 +44,10 @@ public class OrderController {
      * @see OrderDto
      */
     @GetMapping
-    public List<OrderDto> findAll(
+    public ResponseEntity<List<OrderDto>> findAll(
             @RequestParam int pageSize,
             @RequestParam int pageNumber
     ) throws ServiceException {
-        return orderService.findAll(pageNumber, pageSize);
+        return new ResponseEntity<>(orderService.findAll(pageNumber, pageSize), HttpStatus.OK);
     }
 }

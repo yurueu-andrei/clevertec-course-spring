@@ -1,6 +1,8 @@
 package ru.clevertec.ecl.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value = "/tags")
 public class TagController {
+
     private final TagService tagService;
 
     /**
@@ -36,10 +39,10 @@ public class TagController {
      * @see TagDto
      */
     @GetMapping("/{id}")
-    public TagDto findById(
+    public ResponseEntity<TagDto> findById(
             @PathVariable Long id
     ) throws ServiceException {
-        return tagService.findById(id);
+        return new ResponseEntity<>(tagService.findById(id), HttpStatus.OK);
     }
 
     /**
@@ -51,11 +54,11 @@ public class TagController {
      * @see TagDto
      */
     @GetMapping
-    public List<TagDto> findAll(
+    public ResponseEntity<List<TagDto>> findAll(
             @RequestParam int pageSize,
             @RequestParam int pageNumber
     ) throws ServiceException {
-        return tagService.findAll(pageNumber, pageSize);
+        return new ResponseEntity<>(tagService.findAll(pageNumber, pageSize), HttpStatus.OK);
     }
 
     /**
@@ -66,10 +69,10 @@ public class TagController {
      * @see TagDto
      */
     @PostMapping
-    public TagDto add(
+    public ResponseEntity<TagDto> add(
             @RequestBody TagDto tagDto
     ) throws ServiceException {
-        return tagService.add(tagDto);
+        return new ResponseEntity<>(tagService.add(tagDto), HttpStatus.OK);
     }
 
     /**
@@ -108,7 +111,7 @@ public class TagController {
      * @see TagDto
      */
     @GetMapping("/mostUsed")
-    public TagDto findTheMostUsedTag() throws ServiceException {
-        return tagService.findTheMostUsedTag();
+    public ResponseEntity<TagDto> findTheMostUsedTag() throws ServiceException {
+        return new ResponseEntity<>(tagService.findTheMostUsedTag(), HttpStatus.OK);
     }
 }

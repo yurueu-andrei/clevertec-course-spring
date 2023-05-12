@@ -1,6 +1,8 @@
 package ru.clevertec.ecl.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +31,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value = "/certificates")
 public class CertificateController {
+
     private final CertificateService certificateService;
 
     /**
@@ -39,10 +42,10 @@ public class CertificateController {
      * @see CertificateDto
      */
     @GetMapping("/{id}")
-    public CertificateDto findById(
+    public ResponseEntity<CertificateDto> findById(
             @PathVariable Long id
     ) throws ServiceException {
-        return certificateService.findById(id);
+        return new ResponseEntity<>(certificateService.findById(id), HttpStatus.OK);
     }
 
     /**
@@ -62,7 +65,7 @@ public class CertificateController {
      * @see CertificateListDto
      */
     @GetMapping
-    public List<CertificateListDto> findAll(
+    public ResponseEntity<List<CertificateListDto>> findAll(
             @RequestParam(required = false) String tagName,
             @RequestParam(required = false) String partOfName,
             @RequestParam(required = false) String partOfDescription,
@@ -71,7 +74,7 @@ public class CertificateController {
             @RequestParam int pageNumber,
             @RequestParam int pageSize
     ) throws ServiceException {
-        return certificateService.findAll(
+        return new ResponseEntity<>(certificateService.findAll(
                 new CertificateRequestFilter(
                         tagName,
                         partOfName,
@@ -80,7 +83,7 @@ public class CertificateController {
                         nameSortingOrder,
                         pageSize,
                         pageNumber
-                ));
+                )), HttpStatus.OK);
     }
 
     /**
@@ -91,10 +94,10 @@ public class CertificateController {
      * @see CertificateSaveDto
      */
     @PostMapping
-    public CertificateDto add(
+    public ResponseEntity<CertificateDto> add(
             @RequestBody CertificateSaveDto certificateSaveDto
     ) throws ServiceException {
-        return certificateService.add(certificateSaveDto);
+        return new ResponseEntity<>(certificateService.add(certificateSaveDto), HttpStatus.OK);
     }
 
     /**
