@@ -8,6 +8,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface TagMapper {
+
     TagDto toDto(Tag tag);
 
     List<TagDto> toDto(List<Tag> tags);

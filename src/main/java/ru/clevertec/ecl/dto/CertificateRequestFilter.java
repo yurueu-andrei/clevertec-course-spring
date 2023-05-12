@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CertificateRequestFilter {
+
     private String tagName;
     private String partOfName;
     private String partOfDescription;

@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderListDto {
+
     private Long id;
     private LocalDateTime createDate;
     private BigDecimal cost;

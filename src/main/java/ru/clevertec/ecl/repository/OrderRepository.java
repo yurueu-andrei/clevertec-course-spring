@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
+
     @Query("""
                 from Order o left join fetch o.user u left join fetch o.certificate c left join fetch c.tags
                 where o.id = :id

@@ -32,6 +32,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class CertificateService {
+
     private final CertificateRepository certificateRepository;
     private final TagRepository tagRepository;
     private final CertificateMapper certificateMapper;

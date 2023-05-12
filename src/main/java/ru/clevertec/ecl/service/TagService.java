@@ -15,7 +15,6 @@ import ru.clevertec.ecl.repository.UserRepository;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -27,6 +26,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class TagService {
+
     private final TagRepository tagRepository;
     private final UserRepository userRepository;
     private final TagMapper tagMapper;

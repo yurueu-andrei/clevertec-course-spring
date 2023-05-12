@@ -33,6 +33,7 @@ import java.util.Set;
 @Entity
 @Table(name = "certificates")
 public class GiftCertificate {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

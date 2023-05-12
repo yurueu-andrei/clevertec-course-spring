@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CertificateRepository extends JpaRepository<GiftCertificate, Long> {
+
     @Query("from GiftCertificate c left join fetch c.tags where c.id =:id")
     Optional<GiftCertificate> findById(Long id);
 

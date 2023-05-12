@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserSaveDto {
+
     private String firstName;
     private String lastName;
     private Integer age;

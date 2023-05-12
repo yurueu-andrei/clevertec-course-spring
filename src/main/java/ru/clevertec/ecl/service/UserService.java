@@ -27,6 +27,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UserService {
+
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
     private final CertificateRepository certificateRepository;
