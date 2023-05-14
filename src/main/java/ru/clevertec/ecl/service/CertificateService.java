@@ -49,7 +49,7 @@ public class CertificateService {
                             filter.getTagName(),
                             filter.getPartOfName(),
                             filter.getPartOfDescription(),
-                            PageRequest.of(filter.getPageNumber(), filter.getPageSize(), buildSorting(filter))
+                            filter.getPageable()
                     ));
         } catch (Exception ex) {
             throw new ServiceException("Certificates were not found");

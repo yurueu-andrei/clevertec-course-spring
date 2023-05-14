@@ -1,6 +1,7 @@
 package ru.clevertec.ecl.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -61,10 +62,11 @@ public class UserController {
      */
     @GetMapping
     public ResponseEntity<List<UserListDto>> findAll(
-            @RequestParam int pageSize,
-            @RequestParam int pageNumber
+            @RequestParam("size") int pageSize,
+            @RequestParam("page") int pageNumber,
+            Pageable pageable
     ) throws ServiceException {
-        return new ResponseEntity<>(userService.findAll(pageNumber, pageSize), HttpStatus.OK);
+        return new ResponseEntity<>(userService.findAll(pageable), HttpStatus.OK);
     }
 
     /**
@@ -113,10 +115,11 @@ public class UserController {
     @GetMapping("/{id}/orders")
     public ResponseEntity<List<OrderDto>> findUserOrders(
             @PathVariable Long id,
-            @RequestParam int pageSize,
-            @RequestParam int pageNumber
+            @RequestParam("size") int pageSize,
+            @RequestParam("page") int pageNumber,
+            Pageable pageable
     ) throws ServiceException {
-        return new ResponseEntity<>(orderService.findAllByUserId(id, pageNumber, pageSize), HttpStatus.OK);
+        return new ResponseEntity<>(orderService.findAllByUserId(id, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/orders/{orderId}")

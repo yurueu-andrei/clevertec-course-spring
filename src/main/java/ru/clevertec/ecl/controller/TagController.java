@@ -1,6 +1,7 @@
 package ru.clevertec.ecl.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -55,10 +56,11 @@ public class TagController {
      */
     @GetMapping
     public ResponseEntity<List<TagDto>> findAll(
-            @RequestParam int pageSize,
-            @RequestParam int pageNumber
+            @RequestParam("size") int pageSize,
+            @RequestParam("page") int pageNumber,
+            Pageable pageable
     ) throws ServiceException {
-        return new ResponseEntity<>(tagService.findAll(pageNumber, pageSize), HttpStatus.OK);
+        return new ResponseEntity<>(tagService.findAll(pageable), HttpStatus.OK);
     }
 
     /**

@@ -9,7 +9,3 @@ spring:
     show-sql: true
   liquibase:
     change-log: classpath:databases/certificates/changelog.xml
-#logging:
-#  level:
-#    org.springframework.orm.jpa: DEBUG
-#    org.springframework.transaction: DEBUG

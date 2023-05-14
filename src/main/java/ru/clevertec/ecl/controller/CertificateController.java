@@ -1,6 +1,7 @@
 package ru.clevertec.ecl.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -71,8 +72,9 @@ public class CertificateController {
             @RequestParam(required = false) String partOfDescription,
             @RequestParam(required = false) String dateSortingOrder,
             @RequestParam(required = false) String nameSortingOrder,
-            @RequestParam int pageNumber,
-            @RequestParam int pageSize
+            @RequestParam("page") int pageNumber,
+            @RequestParam("size") int pageSize,
+            Pageable pageable
     ) throws ServiceException {
         return new ResponseEntity<>(certificateService.findAll(
                 new CertificateRequestFilter(
@@ -81,8 +83,7 @@ public class CertificateController {
                         partOfDescription,
                         dateSortingOrder,
                         nameSortingOrder,
-                        pageSize,
-                        pageNumber
+                        pageable
                 )), HttpStatus.OK);
     }
 

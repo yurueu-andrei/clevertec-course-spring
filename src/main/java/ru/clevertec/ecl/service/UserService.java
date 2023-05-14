@@ -2,6 +2,7 @@ package ru.clevertec.ecl.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.UserDto;
@@ -38,9 +39,9 @@ public class UserService {
                 .orElseThrow(() -> new ServiceException("User with id = " + id + " was not found"));
     }
 
-    public List<UserListDto> findAll(int pageNumber, int pageSize) throws ServiceException {
+    public List<UserListDto> findAll(Pageable pageable) throws ServiceException {
         try {
-            List<User> list = userRepository.findAll(PageRequest.of(pageNumber, pageSize)).toList();
+            List<User> list = userRepository.findAll(pageable).toList();
             return userMapper.toDto(list);
         } catch (Exception ex) {
             throw new ServiceException("Users were not found");

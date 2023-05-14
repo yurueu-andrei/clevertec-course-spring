@@ -2,6 +2,7 @@ package ru.clevertec.ecl.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.TagDto;
@@ -36,9 +37,9 @@ public class TagService {
                 .orElseThrow(() -> new ServiceException("Tag with id = " + id + " was not found"));
     }
 
-    public List<TagDto> findAll(int pageNumber, int pageSize) throws ServiceException {
+    public List<TagDto> findAll(Pageable pageable) throws ServiceException {
         try {
-            List<Tag> list = tagRepository.findAll(PageRequest.of(pageNumber, pageSize)).toList();
+            List<Tag> list = tagRepository.findAll(pageable).toList();
             return tagMapper.toDto(list);
         } catch (Exception ex) {
             throw new ServiceException("Tags were not found");

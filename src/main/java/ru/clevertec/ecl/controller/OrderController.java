@@ -1,6 +1,7 @@
 package ru.clevertec.ecl.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,9 +46,10 @@ public class OrderController {
      */
     @GetMapping
     public ResponseEntity<List<OrderDto>> findAll(
-            @RequestParam int pageSize,
-            @RequestParam int pageNumber
+            @RequestParam("size") int pageSize,
+            @RequestParam("page") int pageNumber,
+            Pageable pageable
     ) throws ServiceException {
-        return new ResponseEntity<>(orderService.findAll(pageNumber, pageSize), HttpStatus.OK);
+        return new ResponseEntity<>(orderService.findAll(pageable), HttpStatus.OK);
     }
 }

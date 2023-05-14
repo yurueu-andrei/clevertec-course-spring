@@ -2,6 +2,7 @@ package ru.clevertec.ecl.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.clevertec.ecl.dto.OrderDto;
 import ru.clevertec.ecl.dto.OrderListDto;
@@ -29,9 +30,9 @@ public class OrderService {
                 .orElseThrow(() -> new ServiceException("Order with id = " + id + " was not found"));
     }
 
-    public List<OrderDto> findAll(int pageNumber, int pageSize) throws ServiceException {
+    public List<OrderDto> findAll(Pageable pageable) throws ServiceException {
         try {
-            List<Order> list = orderRepository.findAllOrders(PageRequest.of(pageNumber, pageSize)).toList();
+            List<Order> list = orderRepository.findAllOrders(pageable).toList();
             return orderMapper.toDto(list);
         } catch (Exception ex) {
             throw new ServiceException("Orders were not found");
@@ -39,9 +40,9 @@ public class OrderService {
     }
 
 
-    public List<OrderDto> findAllByUserId(Long userId, int pageNumber, int pageSize) throws ServiceException {
+    public List<OrderDto> findAllByUserId(Long userId, Pageable pageable) throws ServiceException {
         try {
-            List<Order> list = orderRepository.findByUserId(userId, PageRequest.of(pageNumber, pageSize));
+            List<Order> list = orderRepository.findByUserId(userId, pageable);
             return orderMapper.toDto(list);
         } catch (Exception ex) {
             throw new ServiceException("Orders were not found");
