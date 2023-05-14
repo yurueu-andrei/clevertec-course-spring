@@ -55,15 +55,12 @@ public class UserController {
     /**
      * Endpoint, which finds all Users and return it as UserListDtos
      *
-     * @param pageNumber used for pagination, defines the number of the page
-     * @param pageSize   used for pagination, defines the number of tags on the page
+     * @param pageable used for pagination, defines the number of tags on the page and the number of page
      * @return returns <b>UserListDtos</b> made out of found Users
      * @see UserListDto
      */
     @GetMapping
     public ResponseEntity<List<UserListDto>> findAll(
-            @RequestParam("size") int pageSize,
-            @RequestParam("page") int pageNumber,
             Pageable pageable
     ) throws ServiceException {
         return new ResponseEntity<>(userService.findAll(pageable), HttpStatus.OK);
@@ -115,8 +112,6 @@ public class UserController {
     @GetMapping("/{id}/orders")
     public ResponseEntity<List<OrderDto>> findUserOrders(
             @PathVariable Long id,
-            @RequestParam("size") int pageSize,
-            @RequestParam("page") int pageNumber,
             Pageable pageable
     ) throws ServiceException {
         return new ResponseEntity<>(orderService.findAllByUserId(id, pageable), HttpStatus.OK);

@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.clevertec.ecl.dto.OrderDto;
 import ru.clevertec.ecl.exception.ServiceException;
@@ -39,15 +38,12 @@ public class OrderController {
     /**
      * Endpoint, which finds all Orders and return it as OrderDtos
      *
-     * @param pageNumber used for pagination, defines the number of the page
-     * @param pageSize   used for pagination, defines the number of tags on the page
+     * @param pageable used for pagination, defines the number of tags on the page and the number of page
      * @return returns <b>OrderDto</b> made out of found Orders
      * @see OrderDto
      */
     @GetMapping
     public ResponseEntity<List<OrderDto>> findAll(
-            @RequestParam("size") int pageSize,
-            @RequestParam("page") int pageNumber,
             Pageable pageable
     ) throws ServiceException {
         return new ResponseEntity<>(orderService.findAll(pageable), HttpStatus.OK);

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.clevertec.ecl.dto.TagDto;
 import ru.clevertec.ecl.dto.TagUpdateDto;
@@ -49,15 +48,12 @@ public class TagController {
     /**
      * Endpoint, which finds all Tags and return it as TagDtos
      *
-     * @param pageNumber used for pagination, defines the number of the page
-     * @param pageSize   used for pagination, defines the number of tags on the page
+     * @param pageable used for pagination, defines the number of tags on the page and the number of page
      * @return returns <b>TagDtos</b> made out of found Tags
      * @see TagDto
      */
     @GetMapping
     public ResponseEntity<List<TagDto>> findAll(
-            @RequestParam("size") int pageSize,
-            @RequestParam("page") int pageNumber,
             Pageable pageable
     ) throws ServiceException {
         return new ResponseEntity<>(tagService.findAll(pageable), HttpStatus.OK);
