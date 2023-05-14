@@ -68,7 +68,7 @@ public class GiftCertificate {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "certificate", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "certificate", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Set<Order> orders;
 
     @PrePersist
