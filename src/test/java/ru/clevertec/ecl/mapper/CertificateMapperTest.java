@@ -24,8 +24,8 @@ class CertificateMapperTest {
     @Test
     void toDtoTest_shouldTransferGiftCertificateObjectToCertificateDto() {
         //given
-        CertificateDto expected = TestUtils.findCertificateDtoForCertificateMapperTest();
-        GiftCertificate certificate = TestUtils.findCertificateForCertificateMapperTest();
+        CertificateDto expected = TestUtils.findCertificateDto();
+        GiftCertificate certificate = TestUtils.findCertificate();
 
         //when
         CertificateDto actual = certificateMapper.toDto(certificate);
@@ -37,8 +37,8 @@ class CertificateMapperTest {
     @Test
     void toListDtoTest_shouldTransferListOfGiftCertificateObjectsToListOfCertificateListDto() {
         //given
-        List<CertificateListDto> expected = TestUtils.findListOfCertificateListDtoForCertificateMapperTest();
-        List<GiftCertificate> certificates = TestUtils.findCertificatesForCertificateMapperTest();
+        List<CertificateListDto> expected = TestUtils.findListOfCertificateListDto();
+        List<GiftCertificate> certificates = TestUtils.findCertificates();
 
         //when
         List<CertificateListDto> actual = certificateMapper.toListDto(certificates);

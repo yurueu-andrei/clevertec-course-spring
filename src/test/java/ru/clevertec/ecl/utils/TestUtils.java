@@ -316,15 +316,15 @@ public class TestUtils {
         return TAGS.get(0);
     }
 
-    public static List<Tag> findTagsForTagMapperTest() {
+    public static List<Tag> findTags() {
         return List.of(TAGS.get(0), TAGS.get(2), TAGS.get(7));
     }
 
-    public static Order findOrderForTagMapperTest() {
+    public static Order findOrderForOrderMapperTest() {
         return ORDERS.get(2);
     }
 
-    public static OrderDto findOrderDtoForTagMapperTest() {
+    public static OrderDto findOrderDto() {
         Order order = ORDERS.get(2);
         OrderDto dto = new OrderDto();
         dto.setId(3L);
@@ -350,11 +350,11 @@ public class TestUtils {
         return dto;
     }
 
-    public static List<Order> findOrdersForTagMapperTest() {
+    public static List<Order> findOrders() {
         return List.of(ORDERS.get(0), ORDERS.get(1), ORDERS.get(2));
     }
 
-    public static List<OrderDto> findOrderDtosForTagMapperTest() {
+    public static List<OrderDto> findOrderDtos() {
         Order order1 = ORDERS.get(0);
         OrderDto dto1 = new OrderDto();
         dto1.setId(order1.getId());
@@ -429,7 +429,7 @@ public class TestUtils {
         return List.of(dto1, dto2, dto3);
     }
 
-    public static OrderListDto findOrderListDtoForTagMapperTest() {
+    public static OrderListDto findOrderListDto() {
         Order order = ORDERS.get(2);
         CertificateDto certificateDto = new CertificateDto();
         certificateDto.setId(order.getCertificate().getId());
@@ -443,11 +443,11 @@ public class TestUtils {
         return new OrderListDto(order.getId(), order.getCreateDate(), order.getCost(), certificateDto);
     }
 
-    public static GiftCertificate findCertificateForCertificateMapperTest() {
+    public static GiftCertificate findCertificate() {
         return GIFT_CERTIFICATES.get(2);
     }
 
-    public static CertificateDto findCertificateDtoForCertificateMapperTest() {
+    public static CertificateDto findCertificateDto() {
         GiftCertificate certificate = GIFT_CERTIFICATES.get(2);
         List<TagDto> tags = certificate.getTags().stream()
                 .map(tag -> new TagDto(tag.getName())).collect(Collectors.toList());
@@ -461,12 +461,12 @@ public class TestUtils {
                 tags);
     }
 
-    public static List<GiftCertificate> findCertificatesForCertificateMapperTest() {
+    public static List<GiftCertificate> findCertificates() {
         return List.of(GIFT_CERTIFICATES.get(0), GIFT_CERTIFICATES.get(1));
     }
 
-    public static List<CertificateListDto> findListOfCertificateListDtoForCertificateMapperTest() {
-        List<GiftCertificate> certs = findCertificatesForCertificateMapperTest();
+    public static List<CertificateListDto> findListOfCertificateListDto() {
+        List<GiftCertificate> certs = findCertificates();
         return certs.stream().map(cert -> new CertificateListDto(
                         cert.getId(),
                         cert.getName(),
@@ -499,11 +499,11 @@ public class TestUtils {
         return certificateResult;
     }
 
-    public static User findUserForCertificateMapperTest() {
+    public static User findUserForUserMapperTest() {
         return USERS.get(0);
     }
 
-    public static UserDto findUserDtoForCertificateMapperTest() {
+    public static UserDto findUserDto() {
         User user = USERS.get(0);
         List<OrderListDto> orders = user.getOrders().stream().map(order -> {
             CertificateDto certificateDto = new CertificateDto();
@@ -531,12 +531,12 @@ public class TestUtils {
                 orders);
     }
 
-    public static List<User> findUsersForCertificateMapperTest() {
+    public static List<User> findUsers() {
         return List.of(USERS.get(0), USERS.get(1));
     }
 
-    public static List<UserListDto> findListOfUserListDtoForCertificateMapperTest() {
-        List<User> users = findUsersForCertificateMapperTest();
+    public static List<UserListDto> findListOfUserListDto() {
+        List<User> users = findUsers();
         return users.stream().map(user -> new UserListDto(
                         user.getId(),
                         user.getFirstName(),
@@ -546,7 +546,7 @@ public class TestUtils {
                 .collect(Collectors.toList());
     }
 
-    public static User findUserForCertificateMapperFromSaveDtoTest() {
+    public static User findUserForUserMapperFromSaveDtoTest() {
         User user = USERS.get(3);
         User userResult = new User();
         userResult.setFirstName(user.getFirstName());
@@ -557,7 +557,7 @@ public class TestUtils {
         return userResult;
     }
 
-    public static UserSaveDto findUserSaveDtoForCertificateMapperFromSaveDtoTest() {
+    public static UserSaveDto findUserSaveDtoForUserMapperFromSaveDtoTest() {
         User user = USERS.get(3);
         UserSaveDto userSaveDto = new UserSaveDto();
         userSaveDto.setFirstName(user.getFirstName());

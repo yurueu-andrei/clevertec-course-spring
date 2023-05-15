@@ -39,7 +39,7 @@ class TagMapperTest {
                 new TagDto("entertainment"),
                 new TagDto("health"),
                 new TagDto("driving"));
-        List<Tag> tags = TestUtils.findTagsForTagMapperTest();
+        List<Tag> tags = TestUtils.findTags();
 
         //when
         List<TagDto> actual = tagMapper.toDto(tags);

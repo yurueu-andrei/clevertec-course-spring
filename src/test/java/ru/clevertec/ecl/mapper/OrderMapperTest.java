@@ -23,8 +23,8 @@ class OrderMapperTest {
     @Test
     void toDtoTest_shouldTransferOrderObjectToOrderDto() {
         //given
-        OrderDto expected = TestUtils.findOrderDtoForTagMapperTest();
-        Order order = TestUtils.findOrderForTagMapperTest();
+        OrderDto expected = TestUtils.findOrderDto();
+        Order order = TestUtils.findOrderForOrderMapperTest();
 
         //when
         OrderDto actual = orderMapper.toDto(order);
@@ -36,8 +36,8 @@ class OrderMapperTest {
     @Test
     void toDtoTest_shouldTransferListOfOrderObjectsToListOfOrderDto() {
         //given
-        List<OrderDto> expected = TestUtils.findOrderDtosForTagMapperTest();
-        List<Order> orders = TestUtils.findOrdersForTagMapperTest();
+        List<OrderDto> expected = TestUtils.findOrderDtos();
+        List<Order> orders = TestUtils.findOrders();
 
         //when
         List<OrderDto> actual = orderMapper.toDto(orders);
@@ -49,8 +49,8 @@ class OrderMapperTest {
     @Test
     void toListDtoTest_shouldTransferOrderObjectToOrderListDto() {
         //given
-        OrderListDto expected = TestUtils.findOrderListDtoForTagMapperTest();
-        Order order = TestUtils.findOrderForTagMapperTest();
+        OrderListDto expected = TestUtils.findOrderListDto();
+        Order order = TestUtils.findOrderForOrderMapperTest();
 
         //when
         OrderListDto actual = orderMapper.toListDto(order);

@@ -24,8 +24,8 @@ class UserMapperTest {
     @Test
     void toDtoTest_shouldTransferUserObjectToUserDto() {
         //given
-        UserDto expected = TestUtils.findUserDtoForCertificateMapperTest();
-        User user = TestUtils.findUserForCertificateMapperTest();
+        UserDto expected = TestUtils.findUserDto();
+        User user = TestUtils.findUserForUserMapperTest();
 
         //when
         UserDto actual = userMapper.toDto(user);
@@ -37,8 +37,8 @@ class UserMapperTest {
     @Test
     void toListDtoTest_shouldTransferListOfUserObjectsToListOfUserListDto() {
         //given
-        List<UserListDto> expected = TestUtils.findListOfUserListDtoForCertificateMapperTest();
-        List<User> users = TestUtils.findUsersForCertificateMapperTest();
+        List<UserListDto> expected = TestUtils.findListOfUserListDto();
+        List<User> users = TestUtils.findUsers();
 
         //when
         List<UserListDto> actual = userMapper.toDto(users);
@@ -50,8 +50,8 @@ class UserMapperTest {
     @Test
     void fromSaveDtoTest_shouldTransferUserSaveDtoToUserObject() {
         //given
-        User expected = TestUtils.findUserForCertificateMapperFromSaveDtoTest();
-        UserSaveDto userSaveDto = TestUtils.findUserSaveDtoForCertificateMapperFromSaveDtoTest();
+        User expected = TestUtils.findUserForUserMapperFromSaveDtoTest();
+        UserSaveDto userSaveDto = TestUtils.findUserSaveDtoForUserMapperFromSaveDtoTest();
 
         //when
         User actual = userMapper.fromSaveDto(userSaveDto);
