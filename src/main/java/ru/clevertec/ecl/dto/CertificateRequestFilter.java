@@ -13,7 +13,5 @@ public class CertificateRequestFilter {
     private String tagName;
     private String partOfName;
     private String partOfDescription;
-    private String dateSortingOrder;
-    private String nameSortingOrder;
     private Pageable pageable;
 }

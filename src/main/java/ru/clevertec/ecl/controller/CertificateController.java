@@ -58,8 +58,6 @@ public class CertificateController {
      *                          which must be present in resulting CertificateListDtos
      * @param partOfDescription used for filtering(optional), defines part of certificate description,
      *                          which must be present in resulting CertificateListDtos
-     * @param dateSortingOrder  used for sorting(optional), defines the order of date sorting
-     * @param nameSortingOrder  used for sorting(optional), defines the order of name sorting
      * @param pageable          used for pagination, defines the number of tags on the page and the number of page
      * @return returns <b>CertificateListDtos</b> made out of found Certificates
      * @see CertificateListDto
@@ -69,8 +67,6 @@ public class CertificateController {
             @RequestParam(required = false) String tagName,
             @RequestParam(required = false) String partOfName,
             @RequestParam(required = false) String partOfDescription,
-            @RequestParam(required = false) String dateSortingOrder,
-            @RequestParam(required = false) String nameSortingOrder,
             Pageable pageable
     ) throws ServiceException {
         return new ResponseEntity<>(certificateService.findAll(
@@ -78,8 +74,6 @@ public class CertificateController {
                         tagName,
                         partOfName,
                         partOfDescription,
-                        dateSortingOrder,
-                        nameSortingOrder,
                         pageable
                 )), HttpStatus.OK);
     }

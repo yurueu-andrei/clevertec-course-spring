@@ -1,8 +1,6 @@
 package ru.clevertec.ecl.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.CertificateDto;
@@ -54,26 +52,6 @@ public class CertificateService {
         } catch (Exception ex) {
             throw new ServiceException("Certificates were not found");
         }
-    }
-
-    private Sort buildSorting(CertificateRequestFilter filter) {
-        List<Sort.Order> orders = new ArrayList<>();
-        if (filter.getNameSortingOrder() != null) {
-            if ("asc".equals(filter.getNameSortingOrder())) {
-                orders.add(Sort.Order.asc("name"));
-            } else {
-                orders.add(Sort.Order.desc("name"));
-            }
-        }
-
-        if (filter.getDateSortingOrder() != null) {
-            if ("asc".equals(filter.getDateSortingOrder())) {
-                orders.add(Sort.Order.asc("createDate"));
-            } else {
-                orders.add(Sort.Order.desc("createDate"));
-            }
-        }
-        return Sort.by(orders);
     }
 
     @Transactional
