@@ -33,11 +33,13 @@ public class UserService {
     private final CertificateRepository certificateRepository;
     private final UserMapper userMapper;
 
+    @Transactional(readOnly = true)
     public UserDto findById(Long id) throws ServiceException {
         return userRepository.findById(id).map(userMapper::toDto)
                 .orElseThrow(() -> new ServiceException("User with id = " + id + " was not found"));
     }
 
+    @Transactional(readOnly = true)
     public List<UserListDto> findAll(Pageable pageable) throws ServiceException {
         try {
             List<User> list = userRepository.findAll(pageable).toList();

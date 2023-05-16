@@ -3,6 +3,7 @@ package ru.clevertec.ecl.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.OrderDto;
 import ru.clevertec.ecl.dto.OrderListDto;
 import ru.clevertec.ecl.entity.Order;
@@ -24,11 +25,13 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
 
+    @Transactional(readOnly = true)
     public OrderDto findById(Long id) throws ServiceException {
         return orderRepository.findById(id).map(orderMapper::toDto)
                 .orElseThrow(() -> new ServiceException("Order with id = " + id + " was not found"));
     }
 
+    @Transactional(readOnly = true)
     public List<OrderDto> findAll(Pageable pageable) throws ServiceException {
         try {
             List<Order> list = orderRepository.findAllOrders(pageable).toList();
@@ -38,7 +41,7 @@ public class OrderService {
         }
     }
 
-
+    @Transactional(readOnly = true)
     public List<OrderDto> findAllByUserId(Long userId, Pageable pageable) throws ServiceException {
         try {
             List<Order> list = orderRepository.findByUserId(userId, pageable);
@@ -48,6 +51,7 @@ public class OrderService {
         }
     }
 
+    @Transactional(readOnly = true)
     public OrderListDto findByIdAndUserId(Long userId, Long orderId) throws ServiceException {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ServiceException("Order with id = " + orderId + " was not found"));

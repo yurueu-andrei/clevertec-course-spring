@@ -35,11 +35,13 @@ public class CertificateService {
     private final TagRepository tagRepository;
     private final CertificateMapper certificateMapper;
 
+    @Transactional(readOnly = true)
     public CertificateDto findById(Long id) throws ServiceException {
         return certificateRepository.findById(id).map(certificateMapper::toDto)
                 .orElseThrow(() -> new ServiceException("Certificate with id = " + id + " was not found"));
     }
 
+    @Transactional(readOnly = true)
     public List<CertificateListDto> findAll(CertificateRequestFilter filter) throws ServiceException {
         try {
             return certificateMapper.toListDto(

@@ -32,11 +32,13 @@ public class TagService {
     private final UserRepository userRepository;
     private final TagMapper tagMapper;
 
+    @Transactional(readOnly = true)
     public TagDto findById(Long id) throws ServiceException {
         return tagRepository.findById(id).map(tagMapper::toDto)
                 .orElseThrow(() -> new ServiceException("Tag with id = " + id + " was not found"));
     }
 
+    @Transactional(readOnly = true)
     public List<TagDto> findAll(Pageable pageable) throws ServiceException {
         try {
             List<Tag> list = tagRepository.findAll(pageable).toList();
@@ -88,7 +90,7 @@ public class TagService {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public TagDto findTheMostUsedTag() {
         Long id = userRepository.findIdOfUserWithTheHighestCostOfAllOrders(PageRequest.of(0, 1)).get(0);
         User user = userRepository.findById(id).orElseThrow(() -> new ServiceException("User not found"));
