@@ -1,6 +1,5 @@
 package ru.clevertec.ecl.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.clevertec.ecl.exception.ServiceException;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +17,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ProjectExceptionHandler {
+
     private int exceptionId = 330;
 
     @ExceptionHandler(ServiceException.class)
@@ -38,6 +39,7 @@ public class ProjectExceptionHandler {
     @NoArgsConstructor
     @AllArgsConstructor
     private static class ApiCallDetailedError {
+
         private String status;
         private List<Map<String, String>> details;
     }

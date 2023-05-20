@@ -1,6 +1,9 @@
 package ru.clevertec.ecl.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.clevertec.ecl.dto.TagDto;
 import ru.clevertec.ecl.dto.TagUpdateDto;
@@ -26,6 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value = "/tags")
 public class TagController {
+
     private final TagService tagService;
 
     /**
@@ -36,26 +39,24 @@ public class TagController {
      * @see TagDto
      */
     @GetMapping("/{id}")
-    public TagDto findById(
+    public ResponseEntity<TagDto> findById(
             @PathVariable Long id
     ) throws ServiceException {
-        return tagService.findById(id);
+        return new ResponseEntity<>(tagService.findById(id), HttpStatus.OK);
     }
 
     /**
      * Endpoint, which finds all Tags and return it as TagDtos
      *
-     * @param limit  used for pagination, defines the number of tags on the page
-     * @param offset used for pagination, defines the number of tags to be skipped (from the beginning)
+     * @param pageable used for pagination, defines the number of tags on the page and the number of page
      * @return returns <b>TagDtos</b> made out of found Tags
      * @see TagDto
      */
     @GetMapping
-    public List<TagDto> findAll(
-            @RequestParam int limit,
-            @RequestParam int offset
+    public ResponseEntity<List<TagDto>> findAll(
+            Pageable pageable
     ) throws ServiceException {
-        return tagService.findAll(limit, offset);
+        return new ResponseEntity<>(tagService.findAll(pageable), HttpStatus.OK);
     }
 
     /**
@@ -66,10 +67,10 @@ public class TagController {
      * @see TagDto
      */
     @PostMapping
-    public TagDto add(
+    public ResponseEntity<TagDto> add(
             @RequestBody TagDto tagDto
     ) throws ServiceException {
-        return tagService.add(tagDto);
+        return new ResponseEntity<>(tagService.add(tagDto), HttpStatus.OK);
     }
 
     /**
@@ -99,5 +100,16 @@ public class TagController {
             @PathVariable Long id
     ) throws ServiceException {
         return tagService.delete(id);
+    }
+
+    /**
+     * Endpoint, which finds the most used Tag of user with the highest cost of all orders and return it as TagDto
+     *
+     * @return returns <b>TagDto</b> made out of found Tag
+     * @see TagDto
+     */
+    @GetMapping("/mostUsed")
+    public ResponseEntity<TagDto> findTheMostUsedTag() throws ServiceException {
+        return new ResponseEntity<>(tagService.findTheMostUsedTag(), HttpStatus.OK);
     }
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="1" author="andrei.yurueu1@gmail.com" context="data">
+        <comment>Create table 'orders'</comment>
+        <createTable tableName="orders">
+            <column name="id" type="bigserial" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="create_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="cost" type="numeric(5,2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="certificate_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="andrei.yurueu1@gmail.com">
+        <sql>
+            ALTER TABLE orders
+                ADD CONSTRAINT certificate_order_fk FOREIGN KEY (certificate_id) REFERENCES certificates (id)
+        </sql>
+        <rollback>
+            <sql>
+                ALTER TABLE orders DROP CONSTRAINT certificate_order_fk
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="3" author="andrei.yurueu1@gmail.com">
+        <sql>
+            ALTER TABLE orders
+                ADD CONSTRAINT user_order_fk FOREIGN KEY (user_id) REFERENCES users (id)
+        </sql>
+        <rollback>
+            <sql>
+                ALTER TABLE orders DROP CONSTRAINT user_order_fk
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -2,7 +2,7 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-    <changeSet id="3" author="andrei.yurueu1@gmail.com">
+    <changeSet id="1" author="andrei.yurueu1@gmail.com">
         <createTable tableName="certificates_tags_links">
             <column name="certificate_id" type="bigint">
                 <constraints nullable="false"/>
@@ -13,7 +13,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="4" author="andrei.yurueu1@gmail.com">
+    <changeSet id="2" author="andrei.yurueu1@gmail.com">
         <sql>
             ALTER TABLE certificates_tags_links
                 ADD CONSTRAINT certificate_tag_fk FOREIGN KEY (certificate_id) REFERENCES certificates (id)
@@ -25,10 +25,10 @@
         </rollback>
     </changeSet>
 
-    <changeSet id="5" author="andrei.yurueu1@gmail.com">
+    <changeSet id="3" author="andrei.yurueu1@gmail.com">
         <sql>
             ALTER TABLE certificates_tags_links
-                ADD CONSTRAINT tag_certificate_fk FOREIGN KEY (tag_id) REFERENCES tags (id)
+                ADD CONSTRAINT tag_certificate_fk FOREIGN KEY (tag_id) REFERENCES tags (id) ON DELETE CASCADE
         </sql>
         <rollback>
             <sql>

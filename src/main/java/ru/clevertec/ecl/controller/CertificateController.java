@@ -1,6 +1,9 @@
 package ru.clevertec.ecl.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.clevertec.ecl.dto.CertificateDto;
 import ru.clevertec.ecl.dto.CertificateListDto;
+import ru.clevertec.ecl.dto.CertificateRequestFilter;
 import ru.clevertec.ecl.dto.CertificateSaveDto;
 import ru.clevertec.ecl.dto.CertificateUpdateDto;
 import ru.clevertec.ecl.exception.ServiceException;
@@ -28,6 +32,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value = "/certificates")
 public class CertificateController {
+
     private final CertificateService certificateService;
 
     /**
@@ -38,10 +43,10 @@ public class CertificateController {
      * @see CertificateDto
      */
     @GetMapping("/{id}")
-    public CertificateDto findById(
+    public ResponseEntity<CertificateDto> findById(
             @PathVariable Long id
     ) throws ServiceException {
-        return certificateService.findById(id);
+        return new ResponseEntity<>(certificateService.findById(id), HttpStatus.OK);
     }
 
     /**
@@ -53,31 +58,24 @@ public class CertificateController {
      *                          which must be present in resulting CertificateListDtos
      * @param partOfDescription used for filtering(optional), defines part of certificate description,
      *                          which must be present in resulting CertificateListDtos
-     * @param dateSortingOrder  used for sorting(optional), defines the order of date sorting
-     * @param nameSortingOrder  used for sorting(optional), defines the order of name sorting
-     * @param limit             used for pagination, defines the number of tags on the page
-     * @param offset            used for pagination, defines the number of tags to be skipped (from the beginning)
+     * @param pageable          used for pagination, defines the number of tags on the page and the number of page
      * @return returns <b>CertificateListDtos</b> made out of found Certificates
      * @see CertificateListDto
      */
     @GetMapping
-    public List<CertificateListDto> findAll(
+    public ResponseEntity<List<CertificateListDto>> findAll(
             @RequestParam(required = false) String tagName,
             @RequestParam(required = false) String partOfName,
             @RequestParam(required = false) String partOfDescription,
-            @RequestParam(required = false) String dateSortingOrder,
-            @RequestParam(required = false) String nameSortingOrder,
-            @RequestParam int limit,
-            @RequestParam int offset
+            Pageable pageable
     ) throws ServiceException {
-        return certificateService.findAll(
-                tagName,
-                partOfName,
-                partOfDescription,
-                dateSortingOrder,
-                nameSortingOrder,
-                limit, offset
-        );
+        return new ResponseEntity<>(certificateService.findAll(
+                new CertificateRequestFilter(
+                        tagName,
+                        partOfName,
+                        partOfDescription,
+                        pageable
+                )), HttpStatus.OK);
     }
 
     /**
@@ -88,10 +86,10 @@ public class CertificateController {
      * @see CertificateSaveDto
      */
     @PostMapping
-    public CertificateDto add(
+    public ResponseEntity<CertificateDto> add(
             @RequestBody CertificateSaveDto certificateSaveDto
     ) throws ServiceException {
-        return certificateService.add(certificateSaveDto);
+        return new ResponseEntity<>(certificateService.add(certificateSaveDto), HttpStatus.OK);
     }
 
     /**

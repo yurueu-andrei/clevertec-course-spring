@@ -1,179 +1,113 @@
 package ru.clevertec.ecl.repository;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import ru.clevertec.ecl.entity.GiftCertificate;
-import ru.clevertec.ecl.entity.Tag;
-import ru.clevertec.ecl.exception.RepositoryException;
-import ru.clevertec.ecl.util.DataStorage;
+import ru.clevertec.ecl.utils.TestUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+class CertificateRepositoryTest extends BaseRepositoryTest {
 
-@Testcontainers
-class CertificateRepositoryTest {
-    @Container
-    private static final PostgreSQLContainer<?> postgresContainer = new PostgreSQLContainer<>("postgres:13")
-            .withDatabaseName("postgres")
-            .withUsername("test")
-            .withPassword("test")
-            .withInitScript("init-db.sql");
+    @Autowired
     private CertificateRepository certificateRepository;
-    @BeforeEach
-    void setUp() {
-        Configuration cfg = new Configuration();
-        cfg.setProperty("hibernate.connection.driver_class", postgresContainer.getDriverClassName());
-        cfg.setProperty("hibernate.connection.url", postgresContainer.getJdbcUrl());
-        cfg.setProperty("hibernate.connection.username", postgresContainer.getUsername());
-        cfg.setProperty("hibernate.connection.password", postgresContainer.getPassword());
-        cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-        cfg.addAnnotatedClass(Tag.class);
-        cfg.addAnnotatedClass(GiftCertificate.class);
-        SessionFactory sessionFactory = cfg.buildSessionFactory();
-        this.certificateRepository = new CertificateRepository(sessionFactory);
+
+    @Test
+    void findAllWithFilterTest_shouldReturnCertificatesWithPaginationAndWithoutFiltering() {
+        //given
+        List<GiftCertificate> expected = TestUtils.findCertsForFindAllWithoutFiltering();
+
+        //when
+        List<GiftCertificate> actual = certificateRepository.findAllWithFilter(
+                null,
+                null,
+                null,
+                PageRequest.of(0, 3));
+
+        //then
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    void checkFindById_shouldReturnCertificateWithId5() {
+    void findAllWithFilterTest_shouldReturnCertificatesWithPaginationAndWithTagNameFiltering() {
         //given
-        Long id = 6L;
-        GiftCertificate expected = DataStorage.findCertificateForFindById(id);
+        List<GiftCertificate> expected = TestUtils.findCertsForFindAllWithTagNameFiltering();
 
         //when
-        GiftCertificate actual = certificateRepository.findById(id);
+        List<GiftCertificate> actual = certificateRepository.findAllWithFilter(
+                "extremal",
+                null,
+                null,
+                PageRequest.of(0, 3));
 
         //then
-        assertEquals(expected, actual);
-    }
-
-    @Nested
-    class FindAllTest {
-        @Test
-        void checkFindAll_shouldReturnCertificatesWithIdsFrom1To5() {
-            //given
-            List<GiftCertificate> expected = DataStorage.findCertificateForFindAll().subList(0, 5);
-
-            //when
-            List<GiftCertificate> actual = certificateRepository
-                    .findAll(null, null, null, null, null, 5, 0);
-
-            //then
-            assertEquals(expected, actual);
-        }
-
-        @Test
-        void checkFindAll_shouldReturnCertificatesWithIdsFrom5To8() {
-            //given
-            List<GiftCertificate> expected = DataStorage.findCertificateForFindAll().subList(4, 8);
-
-            //when
-            List<GiftCertificate> actual = certificateRepository
-                    .findAll(null, null, null, null, null, 4, 4);
-
-            //then
-            assertEquals(expected, actual);
-        }
-
-        @Test
-        void checkFindAll_shouldReturnFirst4CertificatesWithCosmetologyTag() {
-            //given
-            List<GiftCertificate> expected = DataStorage.findCertificateForFindAllWithCosmetologyTagFilter();
-
-            //when
-            List<GiftCertificate> actual = certificateRepository
-                    .findAll("cosmetology", null, null, null, null, 4, 0);
-
-            //then
-            assertEquals(expected, actual);
-        }
-
-        @Test
-        void checkFindAll_shouldReturnFirst3CertificatesWithCenterWordInTheirName() {
-            //given
-            List<GiftCertificate> expected = DataStorage.findCertificateForFindAllWithPartOfNameFilter();
-
-            //when
-            List<GiftCertificate> actual = certificateRepository
-                    .findAll(null, "center", null, null, null, 3, 0);
-
-            //then
-            assertEquals(expected, actual);
-        }
-
-        @Test
-        void checkFindAll_shouldReturn2CertificatesWithInThePhraseInTheirDescriptionSkippingTheFirst2Certificates() {
-            //given
-            List<GiftCertificate> expected = DataStorage.findCertificateForFindAllWithPartOfDescriptionFilter();
-
-            //when
-            List<GiftCertificate> actual = certificateRepository
-                    .findAll(null, null, "in the", null, null, 2, 2);
-
-            //then
-            assertEquals(expected, actual);
-        }
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    void checkAdd_shouldAddCertificateToDB() {
+    void findAllWithFilterTest_shouldReturnCertificatesWithPaginationAndWithPartOfNameFiltering() {
         //given
-        GiftCertificate giftCertificateWithNullDates = DataStorage.findCertificateForAdd();
-        Long expectedId = 11L;
+        List<GiftCertificate> expected = TestUtils.findCertsForFindAllWithPartOfNameFiltering();
 
         //when
-        certificateRepository.add(giftCertificateWithNullDates);
-        GiftCertificate actual = certificateRepository.findById(expectedId);
+        List<GiftCertificate> actual = certificateRepository.findAllWithFilter(
+                null,
+                "individual",
+                null,
+                PageRequest.of(0, 3));
 
         //then
-        assertEquals(actual.getId(), expectedId);
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    void checkUpdate_shouldUpdateOnlyCertificateName() {
+    void findAllWithFilterTest_shouldReturnCertificatesWithPaginationAndWithPartOfDescriptionFiltering() {
         //given
-        GiftCertificate giftCertificateForUpdateName = DataStorage.findCertificateForUpdateName();
-        String previousName = certificateRepository.findById(giftCertificateForUpdateName.getId()).getName();
+        List<GiftCertificate> expected = TestUtils.findCertsForFindAllWithPartOfDescriptionFiltering();
 
         //when
-        certificateRepository.update(giftCertificateForUpdateName);
-        GiftCertificate actual = certificateRepository.findById(giftCertificateForUpdateName.getId());
+        List<GiftCertificate> actual = certificateRepository.findAllWithFilter(
+                null,
+                null,
+                "company",
+                PageRequest.of(0, 2));
 
         //then
-        assertNotEquals(previousName, actual.getName());
-        assertEquals("Hello", actual.getName());
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    void checkUpdate_shouldUpdateOnlyCertificateDescription() {
+    void findAllWithFilterTest_shouldReturnCertificatesWithPaginationAndWithCombinedFiltering() {
         //given
-        GiftCertificate giftCertificateForUpdateDescription = DataStorage.findCertificateForUpdateDescription();
-        String previousDescription = certificateRepository.findById(giftCertificateForUpdateDescription.getId()).getDescription();
+        List<GiftCertificate> expected = TestUtils.findCertsForFindAllWithCombinedFiltering();
 
         //when
-        certificateRepository.update(giftCertificateForUpdateDescription);
-        GiftCertificate actual = certificateRepository.findById(giftCertificateForUpdateDescription.getId());
+        List<GiftCertificate> actual = certificateRepository.findAllWithFilter(
+                "rest",
+                "individual",
+                "company",
+                PageRequest.of(0, 3));
 
         //then
-        assertNotEquals(previousDescription, actual.getName());
-        assertEquals("Bye", actual.getDescription());
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    void checkDelete_shouldDeleteCertificateWithId15AndThrowExceptionWhenTryingToGetDeletedCertificate() {
+    void findAllWithFilterTest_shouldReturnEmptyList() {
         //given
-        Long id = 9L;
+        List<GiftCertificate> expected = new ArrayList<>();
 
         //when
-        certificateRepository.delete(id);
+        List<GiftCertificate> actual = certificateRepository.findAllWithFilter(
+                "unknown",
+                "hello",
+                "bye bye",
+                PageRequest.of(0, 3));
 
         //then
-        assertThrows(RepositoryException.class, () -> certificateRepository.findById(id));
+        Assertions.assertEquals(expected, actual);
     }
 }

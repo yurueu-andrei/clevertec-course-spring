@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CertificateDto {
+
     private Long id;
     private String name;
     private String description;
